@@ -31,7 +31,7 @@ const navigate = useNavigate();
         },)
 
         if(response.status === 201 || response.status === 200){
-            setError("failed to sign up !")
+            setError("failed to sign up")
             console.log("signed up successfully heading to home page!")
             navigate("/Home")
         }
@@ -57,8 +57,8 @@ return(
                   <input type='password' name="password1" id="password" placeholder=" Password..." value={formData.password1 || ""} onChange={handleChange} ></input>
 
                    <label htmlFor ="Rpassword" >Repeat Password:</label>
-                   {error && <div className="error">{error}</div>}
                   <input type='password' name="password2" id="Rpassword" placeholder=" Repeat Password...." value={formData.password2 || ""} onChange={handleChange} ></input>
+                  {error && <div className="error">{error}</div>}
                   <div style={{textAlign :'center'}}>
                     <button type="submit">Register</button>
                      </div>
