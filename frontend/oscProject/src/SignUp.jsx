@@ -57,7 +57,7 @@ return(
                   <input type='password' name="password1" id="password" placeholder=" Password..." value={formData.password1 || ""} onChange={handleChange} ></input>
 
                    <label htmlFor ="Rpassword" >Repeat Password:</label>
-                   <p>{{Error}}</p>
+                   {error && <div className="error">{error}</div>}
                   <input type='password' name="password2" id="Rpassword" placeholder=" Repeat Password...." value={formData.password2 || ""} onChange={handleChange} ></input>
                   <div style={{textAlign :'center'}}>
                     <button type="submit">Register</button>
