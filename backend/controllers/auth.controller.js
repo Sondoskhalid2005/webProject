@@ -47,4 +47,55 @@ const signup =async(req,res)=>{
       }
 }
 
-module.exports= {signup};
+const login = async (req,res) => {
+  const {email, password} = req.body;
+
+  try {
+    // check if user is student or instructor
+    const student = await studentbd.findOne({email});
+    const instructor = await instructordb.findOne({email});
+
+    const user = student || instructor; 
+
+    if(!user){
+      return res.status(404).json({msg:"User not found"});
+    }
+
+    // compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch){
+      return res.status(400).json({msg:"Invalid credentials"});
+    }
+
+    // create JWT token
+    const token = jwt.sign(
+      { id: user._id, role: student ? "student" : "instructor" },
+      process.env.JWT_SECRET, // keep secret in .env
+      { expiresIn: "1h" }
+    );
+
+    return res.status(200).json({
+      msg: "Login successful",
+      token: token,
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: student ? "student" : "instructor"
+    });
+
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+}
+
+const logout = async (req, res) => {
+  try {
+    // forntend must clear the token
+    return res.status(200).json({ msg: "Logged out successfully" });
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+}
+
+
+module.exports= {signup,login,logout};
