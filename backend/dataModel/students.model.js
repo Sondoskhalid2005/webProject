@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const indtructordb= new mongoose.Schema({
+const studentSchema= new mongoose.Schema({
 username: {
     type : String ,
     required: true ,
@@ -15,4 +15,4 @@ username: {
   },
 
 })
-module.exports = mongoose.model("Instructors", indtructordb);
+module.exports = mongoose.model("Students", studentSchema);
