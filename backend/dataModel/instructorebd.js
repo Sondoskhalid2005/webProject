@@ -15,4 +15,4 @@ username: {
   },
 
 })
-module.exports = mongoose.model("instrutotdb", indtructordb);
+module.exports = mongoose.model("Instructors", indtructordb);
