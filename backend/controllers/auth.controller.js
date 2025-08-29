@@ -1,5 +1,5 @@
-const studentbd=require('../dataModel/studentsbd')
-const instructordb=require('../dataModel/instructorebd')
+const studentbd=require('../dataModel/students.model')
+const instructordb=require('../dataModel/instructors.model')
 const bcrypt = require("bcryptjs");
 const jwt=require("jsonwebtoken")
 
