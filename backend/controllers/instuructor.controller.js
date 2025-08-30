@@ -59,4 +59,29 @@ const addLesson = async (req, res) => {
   }
 };
 
-module.exports={addLesson,addCourse}
+const getcourses = async (req, res) => {
+  try{
+    const allcourses=await Course.find()
+  return res.status(200).json({msg:"here is all courses",data:allcourses})}
+  catch(error){
+      return res.status(500).json(error.message)
+  }   
+};
+const getcoursebyid = async (req, res) => {
+  try{
+    const courseid= new mongoose.Types.ObjectId(req.params.courseid)
+    const foundcourses=await Course.findById(courseid)
+  return res.status(200).json({msg:"successfull",data:foundcourses})}
+  catch(error){
+      return res.status(500).json(error.message)
+  }  
+};
+const mycourses=async (req, res) => {
+   const allcourses=await Course.find({instructor_id: req.user.id})
+  try{
+  return res.status(200).json({msg:"here is all your created courses",data:allcourses})}
+  catch(error){
+      return res.status(500).json(error.message)
+  }  
+};
+module.exports={addLesson,addCourse,getcourses,getcoursebyid,mycourses}

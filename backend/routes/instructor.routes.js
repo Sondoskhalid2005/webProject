@@ -10,4 +10,8 @@ router.post("/add-course", authMiddleware.authMiddleware,userAuth.instructorAuth
 // Add lesson (instructor only)
 router.post("/add-lesson", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.addLesson);
 
+router.get("/all-courses", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getcourses);
+router.get("/my-courses", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.mycourses);
+router.get("/:courseid", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getcoursebyid);
+
 module.exports = router;
