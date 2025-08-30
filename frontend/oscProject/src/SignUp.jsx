@@ -4,7 +4,8 @@ import {useNavigate} from "react-router-dom"
 import "./style.css";
 
 export default function SignUp(){
-const [formData, setFormData] = useState({name:"" , email: "", password1: "",  password2: "" });
+ const [role, setRole] = useState("");
+  const [formData, setFormData] = useState({role:"",name:"" , email: "", password1: "",  password2: "" });
 const [error, setError] = useState(""); 
 const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const navigate = useNavigate();
             return;
         }
         const response = await axios.post("http://localhost:3000/auth/signup",{
-            role:"student",
+            role:role,
             username:formData.name ,
             email:formData.email,
             password:formData.password2
@@ -31,7 +32,6 @@ const navigate = useNavigate();
         },)
 
         if(response.status === 201 || response.status === 200){
-            setError("failed to sign up")
             console.log("signed up successfully heading to home page!")
             navigate("/Home")
         }
@@ -41,16 +41,31 @@ const navigate = useNavigate();
     }
 }
 ;
-return(
-    <div className="parent" 
-    > 
-    
-    <div className="register">
+  return (
+    <div className="parent">
+      <div className="register">
         <form onSubmit={handelsubmit}>
-            <label htmlFor ="name" >Name:</label>
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <p style={{ color: "#cfd8dc", marginBottom: "10px" }}>Select your role:</p>
+            <button
+              type="button"
+              className={`role-button ${role === "instructor" ? "active" : ""}`}
+              onClick={() => setRole("instructor")}
+            >
+              instructor
+            </button>
+            <button
+              type="button"
+              className={`role-button ${role === "student" ? "active" : ""}`}
+              onClick={() => setRole("student")}
+            >
+              Student
+            </button>
+          </div>
+          <label htmlFor ="name" >Name:</label>
             <input type='text ' name="name" id="name" placeholder=" Name...." value={formData.name || ""} onChange={handleChange} ></input>
 
-                <label htmlFor ="email" >Email:</label>
+          <label htmlFor ="email" >Email:</label>
                   <input type='email' name="email" id="email" placeholder=" Email...." value={formData.email || ""} onChange={handleChange}></input>
 
                    <label htmlFor ="password" >Password:</label>
@@ -61,10 +76,9 @@ return(
                   {error && <div className="error">{error}</div>}
                   <div style={{textAlign :'center'}}>
                     <button type="submit">Register</button>
-                     </div>
+          </div>
         </form>
+      </div>
     </div>
-    </div>
-   
-)
-;}
+  );
+}
