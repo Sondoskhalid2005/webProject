@@ -15,5 +15,5 @@ username: {
   },
 
 })
-module.exports = mongoose.model("studentdb", studentbd);
+module.exports = mongoose.model("Students", studentSchema);
  
