@@ -59,6 +59,35 @@ const addLesson = async (req, res) => {
   }
 };
 
+async function addTask(courseId, lessonId, title, description, dueDate) {
+  const course = await Course.findById(courseId);
+  if (!course) throw new Error("Course not found");
+
+  const lesson = course.lessons.id(lessonId);
+  if (!lesson) throw new Error("Lesson not found");
+
+  lesson.tasks.push({ title, description, dueDate, questions: [] });
+  await course.save();
+
+  return course;
+}
+
+async function addQuestion(courseId, lessonId, taskId, text, options, correctAnswer) {
+  const course = await Course.findById(courseId);
+  if (!course) throw new Error("Course not found");
+
+  const lesson = course.lessons.id(lessonId);
+  if (!lesson) throw new Error("Lesson not found");
+
+  const task = lesson.tasks.id(taskId);
+  if (!task) throw new Error("Task not found");
+
+  task.questions.push({ text, options, correctAnswer });
+  await course.save();
+
+  return course;
+}
+
 const getcourses = async (req, res) => {
   try{
     const allcourses=await Course.find()
@@ -84,4 +113,4 @@ const mycourses=async (req, res) => {
       return res.status(500).json(error.message)
   }  
 };
-module.exports={addLesson,addCourse,getcourses,getcoursebyid,mycourses}
+module.exports={addLesson,addCourse,addTask,addQuestion,getcourses,getcoursebyid,mycourses}
