@@ -59,34 +59,59 @@ const addLesson = async (req, res) => {
   }
 };
 
-async function addTask(courseId, lessonId, title, description, dueDate) {
-  const course = await Course.findById(courseId);
-  if (!course) throw new Error("Course not found");
+// Add a task to a lesson in a course
+const addTask = async (req, res) => {
+  try {
+    const { courseId, lessonId, title, description, dueDate } = req.body;
 
-  const lesson = course.lessons.id(lessonId);
-  if (!lesson) throw new Error("Lesson not found");
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ msg: "Course not found" });
+    }
 
-  lesson.tasks.push({ title, description, dueDate, questions: [] });
-  await course.save();
+    const lesson = course.lessons.id(lessonId);
+    if (!lesson) {
+      return res.status(404).json({ msg: "Lesson not found" });
+    }
 
-  return course;
-}
+    lesson.tasks.push({ title, description, dueDate, questions: [] });
+    await course.save();
 
-async function addQuestion(courseId, lessonId, taskId, text, options, correctAnswer) {
-  const course = await Course.findById(courseId);
-  if (!course) throw new Error("Course not found");
+    return res.status(201).json({ msg: "Task added successfully", course });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+};
 
-  const lesson = course.lessons.id(lessonId);
-  if (!lesson) throw new Error("Lesson not found");
+// Add a question to a task
+const addQuestion = async (req, res) => {
+  try {
+    const { courseId, lessonId, taskId, text, options, correctAnswer } = req.body;
 
-  const task = lesson.tasks.id(taskId);
-  if (!task) throw new Error("Task not found");
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ msg: "Course not found" });
+    }
 
-  task.questions.push({ text, options, correctAnswer });
-  await course.save();
+    const lesson = course.lessons.id(lessonId);
+    if (!lesson) {
+      return res.status(404).json({ msg: "Lesson not found" });
+    }
 
-  return course;
-}
+    const task = lesson.tasks.id(taskId);
+    if (!task) {
+      return res.status(404).json({ msg: "Task not found" });
+    }
+
+    task.questions.push({ text, options, correctAnswer });
+    await course.save();
+
+    return res.status(201).json({ msg: "Question added successfully", course });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+};
+
 
 const getcourses = async (req, res) => {
   try{
