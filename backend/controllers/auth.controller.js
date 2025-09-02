@@ -2,6 +2,10 @@ const studentbd=require('../dataModel/students.model')
 const instructordb=require('../dataModel/instructors.model')
 const bcrypt = require("bcryptjs");
 const jwt=require("jsonwebtoken")
+const tokenStore = { // save current token and list of loged out token(expired tokens)
+  blacklist: [],
+  currentToken: null,
+};
 
 const signup =async(req,res)=>{
     const {role,username,email,password}=req.body
@@ -49,7 +53,7 @@ const signup =async(req,res)=>{
 
 const login = async (req,res) => {
   const {email, password} = req.body;
-
+  tokenStore.blacklist.length=0; // remove old saved token from blacklist
   try {
     // check if user is student or instructor
     const student = await studentbd.findOne({email});
@@ -73,6 +77,7 @@ const login = async (req,res) => {
       process.env.JWT_SECRET, // keep secret in .env
       { expiresIn: "1h" }
     );
+    tokenStore.currentToken=token; 
 
     return res.status(200).json({
       msg: "Login successful",
@@ -90,12 +95,16 @@ const login = async (req,res) => {
 
 const logout = async (req, res) => {
   try {
-    // forntend must clear the token
-    return res.status(200).json({ msg: "Logged out successfully" });
-  } catch (error) {
+  if(tokenStore.currentToken){ // if current token exists push it in blacklist to logout 
+  tokenStore.blacklist.push(tokenStore.currentToken)
+  return res.status(200).json({ msg: "Logged out successfully" });
+}
+  return res.status(404).json({ msg: "Logging out failed" });
+
+  }catch (error) {
     return res.status(500).json(error.message);
   }
 }
 
 
-module.exports= {signup,login,logout};
+module.exports= {signup,login,logout, tokenStore};

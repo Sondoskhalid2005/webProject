@@ -13,5 +13,8 @@ router.post("/add-lesson", authMiddleware.authMiddleware,userAuth.instructorAuth
 router.get("/all-courses", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getcourses);
 router.get("/my-courses", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.mycourses);
 router.get("/:courseid", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getcoursebyid);
+//router.get("/:lessonid", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getlessonbyid);
+//router.get("/all-lessons", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getlessonbyid);
+
 
 module.exports = router;
