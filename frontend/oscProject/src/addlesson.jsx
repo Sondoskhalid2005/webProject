@@ -26,7 +26,7 @@ const navigate = useNavigate();
     content: formData.content,
     videoUrl:formData.video_url
   },{
-          headers:{ Authorization :"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjI2ZjdiNDc1ZTFkNjhkMmI0MjI2ZSIsInJvbGUiOiJpbnN0cnVjdG9yIiwiaWF0IjoxNzU2Nzk1NDA2LCJleHAiOjE3NTY3OTkwMDZ9.rVrMDTpSzrGNGl5fFx6tpGS6PYCDqnnyuqv1QX1WVrc"}
+          headers:{ Authorization :"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjI2ZjdiNDc1ZTFkNjhkMmI0MjI2ZSIsInJvbGUiOiJpbnN0cnVjdG9yIiwiaWF0IjoxNzU2Nzk2MDEwLCJleHAiOjE3NTY3OTk2MTB9.3cxIwvFm71M8-T51bx4eJJFz4kC-8ONWXbpLqL0o5dU"}
       })
 
         if(response.status === 201 || response.status === 200){

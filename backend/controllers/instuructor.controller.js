@@ -47,7 +47,7 @@ const addLesson = async (req, res) => {
       course_id:courseId,
       title,
       content,
-      videoUrl,
+      video_url:videoUrl,
       position:nextPosition
     });
 
