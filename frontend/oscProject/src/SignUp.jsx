@@ -5,6 +5,7 @@ import "./style.css";
 
 export default function SignUp(){
  const [role, setRole] = useState("");
+ const [accept, setAccept] = useState(false);
   const [formData, setFormData] = useState({role:"",name:"" , email: "", password1: "",  password2: "" });
 const [error, setError] = useState(""); 
 const navigate = useNavigate();
@@ -73,6 +74,8 @@ const navigate = useNavigate();
 
                    <label htmlFor ="Rpassword" >Repeat Password:</label>
                   <input type='password' name="password2" id="Rpassword" placeholder=" Repeat Password...." value={formData.password2 || ""} onChange={handleChange} ></input>
+            {formData.password1.length < 8 && accept && (<p className="error">Password must be more than 8 characters</p> )} 
+                  
                   {error && <div className="error">{error}</div>}
                   <div style={{textAlign :'center'}}>
                     <button type="submit">Register</button>

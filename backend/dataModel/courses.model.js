@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const lessons=require("../dataModel/lessons.model")
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -10,11 +10,18 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  instructor_id: {
+  instructorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Instructors", // references to the instructors collection
     required: true,
-  }
+  },
+  courseImage: {
+    type: String,
+  },
+  lessons: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "lessons" 
+      }],  
 });
 
 // Prevent duplicate courses

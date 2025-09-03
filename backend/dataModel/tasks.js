@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-
-
+const questionSchema=require("./questions.js")
+const lessons=require("./lessons.model.js")
 const taskSchema = new mongoose.Schema({
   lessonId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Lesson',   // link task to a lesson
+    ref: 'lessons',   // link task to a lesson
     required: true
   },
   title: {
@@ -12,13 +12,14 @@ const taskSchema = new mongoose.Schema({
     required: true
   },
   description: String,
-  dueDate: Date,
-  questions: [questionSchema],  // array of questions
+  questions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Question',
+  }],  
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-module.exports = mongoose.model("Task", taskSchema);
 module.exports = mongoose.model("Task", taskSchema);

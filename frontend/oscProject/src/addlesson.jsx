@@ -4,10 +4,10 @@ import {useNavigate} from "react-router-dom"
 import "./style.css";
 
 export default function AddLesson(){
-  const [formData, setFormData] = useState({title:"",content:"" ,materials:"", video_url: "", video:null});
+const [formData, setFormData] = useState({title:"",content:"" ,materials:"", video_url: "", video:null});
 const [error, setError] = useState(""); 
 const navigate = useNavigate();
-
+const currrentToken =sessionStorage.getItem("token")
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -18,21 +18,23 @@ const navigate = useNavigate();
     e.preventDefault() //prevent refreshing the page
     setError("");
     try{ 
-
+if(currrentToken){
         const response = await axios.post("http://localhost:3000/instructor/add-lesson",
          {
-    courseId: "68b26fc0475e1d68d2b4227b",
+    courseId: "68b7c7c4e5bd55ce14cfbdb3",
     title: formData.title,
     content: formData.content,
     videoUrl:formData.video_url
   },{
-          headers:{ Authorization :"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjI2ZjdiNDc1ZTFkNjhkMmI0MjI2ZSIsInJvbGUiOiJpbnN0cnVjdG9yIiwiaWF0IjoxNzU2Nzk2MDEwLCJleHAiOjE3NTY3OTk2MTB9.3cxIwvFm71M8-T51bx4eJJFz4kC-8ONWXbpLqL0o5dU"}
+          headers:{ Authorization :`Bearer ${currrentToken}`}
       })
-
+    
         if(response.status === 201 || response.status === 200){
             console.log("added new lesson for the course successfully !")
             navigate("/Home")
         }
+      }
+      setError("no token provided !")
 
     }catch(error){
         setError("failed to add new lesson !")
@@ -53,23 +55,6 @@ const handlevideoChange = (e) => {
     <div className="parent">
       <div className="register">
         <form onSubmit={handelsubmit}>
-          {/* <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <p style={{ color: "#cfd8dc", marginBottom: "10px" }}>Select your role:</p>
-            <button
-              type="button"
-              className={`role-button ${role === "instructor" ? "active" : ""}`}
-              onClick={() => setRole("instructor")}
-            >
-              instructor
-            </button>
-            <button
-              type="button"
-              className={`role-button ${role === "student" ? "active" : ""}`}
-              onClick={() => setRole("student")}
-            >
-              Student
-            </button>
-          </div> */}
  <div style={{ textAlign: "center", marginBottom: "20px" }}>
             <p style={{ color: "#cfd8dc", marginBottom: "10px" }}>Fill Lesson Details:</p>
  </div> 

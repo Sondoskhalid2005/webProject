@@ -3,7 +3,7 @@ const mongoose=require("mongoose")
 const authController=require("../controllers/auth.controller")
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1].trim();
+  const token = req.headers["authorization"]?.split(" ")[1];
   
   // Check if token is missing, blacklisted, or not the current active token
   if (!token|| authController.tokenStore.blacklist.includes(token) || authController.tokenStore.currentToken!==token ) // check if token in blacklist(means loged out) and prevent another active calling work

@@ -4,7 +4,6 @@ import axios from "axios";
 import "./style.css";
 
 export default function Login() {
-const [accept, setAccept] = useState(false);
 const [formData, setFormData] = useState({role:"",email: "",password:"" });
 const [error, setError] = useState(""); 
 const navigate = useNavigate();
@@ -23,11 +22,17 @@ const handelsubmit=async(e)=>{
             email:formData.email,
             password:formData.password
         },)
+                 if(response.status === 404){
+          setError("wrong email !")
+         
+        }
 
         if(response.status === 200){
-            console.log("loged in successfully heading to home page!")
+            console.log("loged in successfully heading to home page!", response.data.token)
+            sessionStorage.setItem("token",response.data.token)
             navigate("/Home")
         }
+
 
     }catch(error){
         setError("failed to login !")
@@ -37,24 +42,6 @@ return (
     <div className="parent">
       <div className="login">
         <form onSubmit={handelsubmit}>
-          {/* <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <p style={{ color: "#cfd8dc", marginBottom: "10px" }}>Select your role:</p>
-            <button
-              type="button"
-              className={`role-button ${formData.role === "Instructor" ? "active" : ""}`}
-              onClick={() => setFormData.role("Instructor")}
-            >
-              Instructor
-            </button>
-            <button
-              type="button"
-              className={`role-button ${formData.role === "Student" ? "active" : ""}`}
-              onClick={() => setFormData.role("Student")}
-            >
-              Student
-            </button>
-          </div> */}
-
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -74,9 +61,6 @@ return (
             onChange={handleChange}
           />
           {error && <div className="error">{error}</div>}
-          {/* {formData.password.length < 8 && accept && (
-            <p className="error">Password must be more than 8 characters</p>
-          )} */}
           <div style={{ textAlign: "center", marginTop: "20px" }}>
             <button type="submit">Login</button>
           </div>

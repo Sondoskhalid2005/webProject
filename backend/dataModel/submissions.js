@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const submissionSchema = new mongoose.Schema({
   taskId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -8,10 +7,9 @@ const submissionSchema = new mongoose.Schema({
   },
   studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', 
+    ref: 'Students', 
     required: true
   },
-  fileUrl: String,
   grade: {
     type: Number,
     min: 0,
