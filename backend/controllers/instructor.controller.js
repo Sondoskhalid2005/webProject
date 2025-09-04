@@ -72,7 +72,7 @@ const addTask = async (req, res) => {
     const newTask= new Tasks({ lessonId,title, description, questions: [] });
     lesson.taskId=newTask._id
     await newTask.save();
-    //await lesson.save()
+    await lesson.save()
 
     return res.status(201).json({ msg: "Task added successfully", data:newTask });
   } catch (error) {
@@ -111,29 +111,5 @@ const addQuestion = async (req, res) => {
   }
 };
 
-const getcourses = async (req, res) => {
-  try{
-    const allcourses=await Course.find()
-  return res.status(200).json({msg:"here is all courses",courses:allcourses})}
-  catch(error){
-      return res.status(500).json(error.message)
-  }   
-};
-const getcoursebyid = async (req, res) => {
-  try{
-    const courseid= new mongoose.Types.ObjectId(req.params.courseid)
-    const foundcourses=await Course.findById(courseid)
-  return res.status(200).json({msg:"successfull",data:foundcourses})}
-  catch(error){
-      return res.status(500).json(error.message)
-  }  
-};
-const mycourses=async (req, res) => {
-   const allcourses=await Course.find({instructor_id: req.user.id})
-  try{
-  return res.status(200).json({msg:"here is all your created courses",data:allcourses})}
-  catch(error){
-      return res.status(500).json(error.message)
-  }  
-};
-module.exports={addLesson,addCourse,addTask,addQuestion,getcourses,getcoursebyid,mycourses}
+
+module.exports={addLesson,addCourse,addTask,addQuestion}
