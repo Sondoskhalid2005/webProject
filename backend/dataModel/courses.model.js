@@ -10,6 +10,10 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  instructorName:{
+    type: String,
+    required: true,
+  },
   instructorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Instructors", // references to the instructors collection
@@ -24,7 +28,6 @@ const courseSchema = new mongoose.Schema({
       }],  
 });
 
-// Prevent duplicate courses
-courseSchema.index({ title: 1,instructor_id: 1 }, { unique: true });
+
 module.exports = mongoose.model("Courses", courseSchema);
 

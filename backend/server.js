@@ -20,6 +20,6 @@ mongodb.connect(process.env.URL)
     
 
 app.use("/auth",authrouter)
-app.use("/instructor",instructorRouter)
+app.use("/courses",instructorRouter)
 app.use("/student",studentsRouter)
 

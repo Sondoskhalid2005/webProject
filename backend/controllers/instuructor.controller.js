@@ -10,6 +10,7 @@ const addCourse = async (req, res) => {
     const newCourse = new Course({
       title,
       description,
+      instructorName:req.user.username,
       instructorId: req.user.id,
       courseImage,
       lessons:[]
@@ -113,7 +114,7 @@ const addQuestion = async (req, res) => {
 const getcourses = async (req, res) => {
   try{
     const allcourses=await Course.find()
-  return res.status(200).json({msg:"here is all courses",data:allcourses})}
+  return res.status(200).json({msg:"here is all courses",courses:allcourses})}
   catch(error){
       return res.status(500).json(error.message)
   }   

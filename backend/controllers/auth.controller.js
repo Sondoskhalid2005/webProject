@@ -73,9 +73,9 @@ const login = async (req,res) => {
 
     // create JWT token
     const token = jwt.sign(
-      { id: user._id, role: student ? "student" : "instructor" },
+      { id: user._id, role: student ? "student" : "instructor",username:user.username },
       process.env.JWT_SECRET, // keep secret in .env
-      { expiresIn: "24h" }
+      { expiresIn: "1h" }
     );
     tokenStore.currentToken=token; 
 

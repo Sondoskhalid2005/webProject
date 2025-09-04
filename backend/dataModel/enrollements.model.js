@@ -13,8 +13,5 @@ const enrollmentSchema = new mongoose.Schema({
   },
 });
 
-// Prevent duplicate enrollments (same student in same course)
-enrollmentSchema.index({ course_id: 1, student_id: 1 }, { unique: true });
-
 module.exports = mongoose.model("EnrollmentS", enrollmentSchema);
 

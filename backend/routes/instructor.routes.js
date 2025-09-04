@@ -7,7 +7,7 @@ const userAuth=require("../middleware/userAuth.middleware.js")
 
 router.post("/add-course", authMiddleware.authMiddleware,userAuth.instructorAuth ,  controller.addCourse);
 router.post("/add-lesson", controller.addLesson);
-router.get("/all-courses", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.getcourses);
+router.get("/all-courses", authMiddleware.authMiddleware,controller.getcourses);
 router.get("/my-courses", authMiddleware.authMiddleware,userAuth.instructorAuth , controller.mycourses);
 
 router.post("/add-task",controller.addTask);
